@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include <graphics/drawing.h>
 #include <graphics/color.h>
 #include <graphics/text.h>
@@ -21,6 +20,6 @@ int main(void) {
   
   while (1) {
     keypad_read();
-    if (get_key_state(KEY_POWER) || get_key_state(KEY_BACK)) exit(-2);
+    if (get_key_state(KEY_POWER) || get_key_state(KEY_BACK)) return -2;
   }
 }
