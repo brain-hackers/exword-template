@@ -7,17 +7,24 @@ on:
     inputs:
       tag:
         type: string
+        required: true
         description: 'Tag Name to be created'
+
+permissions:
+  contents: write
+
+env:
+  GH_TOKEN: ${{ github.token }}
+  VERSION: ${{ inputs.tag || github.ref_name }}
 
 jobs:
   build:
     name: Build EX-word addon
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Build
         run: |
@@ -28,9 +35,4 @@ jobs:
           zip -r build.zip build
 
       - name: Publish
-        run: |
-          if [ -n "${{ inputs.tag }}" ]; then
-            gh release create "${{ inputs.tag }}" -t "${{ inputs.tag }}" -n "Automatic build of $(git rev-parse HEAD)." ./build.zip
-          else
-            gh release create "${GITHUB_REF/refs\/*s\//}" -t "${GITHUB_REF/refs\/*s\//}" -n "Automatic build of $(git rev-parse HEAD)." ./build.zip
-          fi
+        run: gh release create "$VERSION" -t "$VERSION" -n "Automatic build of $(git rev-parse HEAD)." build.zip
