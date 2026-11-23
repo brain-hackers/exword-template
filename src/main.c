@@ -7,8 +7,9 @@
 #define SCREEN_WIDTH 528
 #define SCREEN_HEIGHT 320
 
-int main(void) {
+int main(void *ptr) {
   struct font *fnt = get_font();
+  if (*(long *)ptr == 1) return -1;  /* prevent another launch while exiting */
 
   set_pen(create_rgb16(0, 0, 0));
   draw_rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);

@@ -21,9 +21,9 @@ SFILES       := $(wildcard $(SOURCEDIR)/*.s) $(wildcard $(SOURCEDIR)/libc/*.s)
 OBJECTS      := $(CFILES:.c=.o) $(SFILES:.s=.o)
 
 CC_OPTS      :=
-LDFLAGS      := -Wall -std=gnu17 -nostdlib -L$(DEVKITPRO)/libdataplus/lib -ldataplus -lgraphics -lsh4a
-CFLAGS       := -Wall -std=gnu17 -fno-builtin -I$(DEVKITPRO)/libdataplus/include -I$(SOURCEDIR) -I$(SOURCEDIR)/libc/include -O3 $(CC_OPTS)
-ASFLAGS      := -Wall -std=gnu17 -m4-nofpu
+LDFLAGS      := -std=gnu17 -nostdlib -L$(DEVKITPRO)/libdataplus/lib -ldataplus -lgraphics -lsh4a
+CFLAGS       := -std=gnu17 -fno-builtin -I$(DEVKITPRO)/libdataplus/include -I$(SOURCEDIR) -I$(SOURCEDIR)/libc/include -O3 $(CC_OPTS)
+ASFLAGS      := -std=gnu17 -m4-nofpu
 
 app: $(addprefix build/,$(addsuffix /$(APPID),$(BUILDS)))
 
